@@ -1,0 +1,89 @@
+node ace >> documentação
+
+
+1° Abrir terminal integrado
+2° npm init adonis-ts-app@latest .
+	* Abrir o servidor do adonis >>    node ace serve 
+
+3° abrie a aplicação que faz teste na api - POSTMAN
+ + collections > new request 
+ * configura a variavel URL com o endereço do local host forneceido pelo adonis
+
+4° instalar o pacote auxiliar para banco de dados
+ >> npm i @adonisjs/lucid
+	>> Configurar pacote 
+	 >> node ace configure @adonisjs/lucid 
+
+5° abrir config > cors > enabled > true > copiar e colar codigo , para liberar acesso com (api)
+
+6° model é quem manda na programação quem define a regra de negocio 
+	também é usada para criar o arquivo em app/models > que cria as colunas do Banco de dados 
+	>>node ace make:model <nome> -m 
+		obs: -m cria o data base
+	>> model ajudar a criar a aplicação
+ 	>> migration ajudar a criar o banco de dados 	
+
+	>> logo após criar as colunas em app/models é preciso ir em database/migrations e criar as table.string("title") na mão .
+		obs: migrations dentro do database é quem vai refletir o model
+
+	>> depois de criar e models e o migrations estiverem iguais e correspondentes é preciso dar o comando 
+		
+	>>antes de dar o proximo comando tive que executar o comando para funcionar >> npm install sqlite3 
+	>> node ace migration:run 
+
+	>> na pasta tmp o dataBase deve ter sido criado 
+	
+7° Criar Crud 
+	>> Criar o Controller >> onde vai ficar as regras de negocios da aplicação
+
+	>> node ace make:controller <nome> 
+		>> vai abrir na pasta app/controllers/http/<nome>
+			obs: geralmente funções de inserção de dados no sistema de chama store
+
+			>> no meu primeiro projeto adonis >> estudosAdonisjs >> criei e um controller chamado Moment e dentro dele uma função retornando uma mensagem
+			>> agora é preciso pegar essa função e colocar ela no arquivo de rotas para poder acessa-la
+			>> start/routes.ts >> dentro do group vou criar um // aqui estou chamadno o model também o migration R Route.resource('/moments','momentsController').apiOnly()
+				obs: isso é seria a url  
+
+			>> agora vou verificar as lista de rota dispoviel no comando 
+			>> node ace list:routes
+
+			>>em app/controller/... retirar o comentario da importação
+			>> importar a classe do model "moment" para dentro do controller
+
+			>> o pot man serve para criar uma coleção de requição e testalas
+
+8° AGORA VAMOS INSERIR UMA Imagem No BANCo de dadoS 
+	
+	>> nesse caso queremos que a imagem tenha um nome unico , então é preciso importar um pacote que gera strings aleatorias para concaTenaR com o nome da imagem
+		>> npm i uuid 
+			>> import {v4 as uuidv4} from 'uuid'
+
+	>> para poder colocar a imagem no lugar que eu quero é preciso importar um pacote do proprio adonis no arquivo do controller 
+		>> import Application  from "@ioc:Adonis/Core/Application"
+
+9° criar model 
+	>> para se ralacionar com as outras funionalidades e componentes 
+
+	>> >>  node ace make:model <nome> -m
+			>> node ace make:model Comment -m
+			>> pre preciso add as tabelas em no model criado 
+			e também atualizar no -m migration
+			e também é preciso dar um 
+
+			>> node ace migration:run
+
+			>> OBS !!!
+			o criar o model eu estou criando o basico do banco de dados 
+			depois eu vou e insiro as outras colunas que eu presico 
+			logo tenho que fazer a inclusão do migration
+			e deopis é preciso dos o comando node ace migration:run para as coular a atualizações do banco ser criada 
+
+			quando referenciar uma tabela na outra como é o caso das tabelas momensts ter comentarios 
+			intem dentro do model tem que importar o model Comment
+
+			com o  @hasMany() dentro do model nesse caso no Momment estou dizendo que esse model tem muito comentarios 
+			relacionamento para muitos 
+
+
+
